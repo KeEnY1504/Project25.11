@@ -5,10 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="./assets/JS/script.js" defer></script>
+<!--    <script src="./assets/JS/script.js" defer></script>-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        #loader {
+            display: none;
+            font-size: 24px;
+            text-align: center;
+        }
+        .attraction {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="yakor">
@@ -46,53 +63,63 @@
         </div>
         <script src="./assets/JS/burger.js"></script>
     </header>
-    <section class="slid2" id="slid2">
-        <p class="slid2__intro" style="color: #BF9424;">ДОСТОПРИМЕЧАТЕЛЬНОСТИ</p>
-        <div class="slid2__boxs">
-            <div class="slid2__boxs-box">
-                <div class="foto"><img src="./assets/img/image(1).png" alt=""></div>
-                <div class="slid2__boxs-box__text-intro">
-                    <p class="intro" style="color: #D92525;">Нарын-кала<br> Дербентская крепость</p>
-                    <p class="text"><a href="https://maps.app.goo.gl/eoUH3wMdsjdeaPKa7" style="color: #BF9424;">Нарын-Кала</a> — древняя крепость. 
-                        Построенная в V веке, она служила стратегическим 
-                        оборонительным сооружением, защищающим вход в 
-                        Каспийское море. Здесь можно прогуляться по старинным
-                         стенам, насладиться великолепными видами на город и 
-                         окружающие пейзажи, а также узнать о богатой истории 
-                         региона. Нарын-Кала является объектом Всемирного наследия 
-                         ЮНЕСКО и обязательным местом для посещения любителей истории
-                         и архитектуры.</p>
+    <section class="dep">
+    
+        <div class="dep_box">
+            <div class="top">
+                <div class="top-bottoms">
+                    <button class="button_filtr" id='filtr-1'>Архитектурные сооружения</button>
+                    <p>|</p>
+                    <button class="button_filtr" id='filtr-2'>Музеи</button>
+                    <p>|</p>
+                    <button class="button_filtr" id='filtr-3'>Все</button>
                 </div>
+                <input id='search_input' type="search">
             </div>
-            <div class="slid2__boxs-box">
-                <div class="foto"><img src="./assets/img/image(2).png" alt=""></div>
-                <div class="slid2__boxs-box__text-intro">
-                    <p class="intro" style="color: #D92525;">Дербентская стена</p>
-                    <p class="text"><a href="https://maps.app.goo.gl/Y7f4AoTbwWssjZw16" style="color: #BF9424;">Дербентская стена</a> — древнее оборонительное сооружение, 
-                        протянувшееся вдоль побережья Каспийского моря. Построенная в VI-VII 
-                        веках, она служила защитой от врагов и является одной из самых длинных 
-                        крепостных стен в мире. Прогулка вдоль стен позволяет насладиться 
-                        потрясающими видами на город и море, а также погрузиться в богатую 
-                        историю региона. Здесь можно увидеть старинные башни и ворота, а также 
-                        узнать о значении Дербента как стратегического пункта на пути между Европой 
-                        и Азией.</p>
+            <div class="dep__cards">
+                <div class="card bam" id="1">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Дербентский маяк</h3>
                 </div>
-            </div>
-            <div class="slid2__boxs-box">
-                <div class="foto"><img src="./assets/img/image(3).png" alt=""></div>
-                <div class="slid2__boxs-box__text-intro">
-                    <p class="intro" style="color: #D92525;">Старый город Дербента</p>
-                    <p class="text" ><a href="https://maps.app.goo.gl/NyaubG9rG8nG418p8" style="color: #BF9424;">Старый город Дербента</a> — это исторический район с 
-                        узкими улочками, древними зданиями и уникальной атмосферой. 
-                        Здесь расположены такие достопримечательности, как Нарын-Кала 
-                        (крепость), мечеть Джума и множество музеев, отражающих богатую 
-                        культуру и историю региона. Прогулка по Старому городу позволит 
-                        вам окунуться в атмосферу древности и насладиться местной архитектурой, 
-                        а также попробовать традиционные блюда в уютных кафе. Не забудьте сделать 
-                        фотографии на фоне живописных видов</p>
+                <div class="card" id="2">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Кырхляр</h3>
+                </div>
+                <div class="card" id="3 bam">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Парк имени Низами Гянджеви</h3>
+                </div>
+                <div class="card" id="4">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Дербентская стена</h3>
+                </div>
+                <div class="card bum" id="5">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Нарын-кала</h3>
+                </div>
+                <div class="card" id="6">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Домик Петра I. </h3>
+                </div>
+                <div class="card" id="7">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Келе-Нумаз</h3>
+                </div>
+                <div class="card" id="8">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Церковь Святого Всеспасителя</h3>
+                </div>
+                <div class="card" id="9">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Дербентская Джума-мечеть</h3>
+                </div>
+                <div class="card" id="10">
+                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                    <h3>Церковь Покрова</h3>
                 </div>
             </div>
         </div>
+        <script src="./assets/JS/index2.js"></script>
     </section>
     <section class="footer">
         <div class="footer__container">
@@ -117,5 +144,6 @@
             <p style="color: white;">&copy; 2024 Путеводитель по городу. Все права защищены.</p>
         </div>
     </section>
+
 </body>
 </html>

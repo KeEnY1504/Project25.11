@@ -7,7 +7,7 @@ const slides = Array.from(slider.querySelectorAll('img'));
 const slideCount = slides.length;
 let slideIndex = 0;
 
-// Устанавливаем обработчики событий для кнопок
+// Делаем событий для кнопок
 prevButton.addEventListener('click', showPreviousSlide);
 nextButton.addEventListener('click', showNextSlide);
 
@@ -36,17 +36,5 @@ function updateSlider() {
 
 // Инициализация слайдера
 updateSlider();
-
-
-
-
-
-// const boxContainer = document.querySelector(".box-container");
-
-// boxContainer.addEventListener("click", (e) => {
-//   if (e.target.classList.contains("box")) {
-//     e.target.classList.toggle("active");
-//   }
-// });
 
 
