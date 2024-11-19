@@ -18,6 +18,7 @@
 
 
 *{
+    scroll-behavior: smooth;
     margin: 0;
     padding: 0;
     font-family: Comfortaa;
@@ -25,6 +26,7 @@
     text-decoration: none;
 }
 body{
+    
     margin: 0 auto;
     width: 100%;
     height: 100%;
@@ -269,7 +271,7 @@ body{
 .dep{
     width: 100%;
     height: 100%;
-    &_box{
+    &__box{
         width: 900px;
         height: auto;
         margin:  50px auto;
@@ -348,6 +350,10 @@ body{
                 }
                 & .img{
                     margin: 10px auto;
+                    & img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
         }
     }

@@ -1,4 +1,5 @@
 fetch("https://6729b8f86d5fa4901b6e13bc.mockapi.io/attractions")
+
 function UrlSearh(name) {
     const url = new URLSearchParams(window.location.search);
     return url.get(name);
