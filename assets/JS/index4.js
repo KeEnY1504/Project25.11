@@ -29,17 +29,22 @@ function render(desp) {
     modal.innerHTML = `
                     <div class="modal-index4__box">
                         <h1>${desp.name}</h1>
-                        <div class="modal-index4__box-img"> 
-                            <img src="${desp.img}">
-                        </div>
-                        <!-- Описание достопримечательности-->
-                        <div class='modal-index4__box-title'>
-                            <p>${desp.description}</p>
-                        </div>
-                        <!-- Кнопка для переадресации на карту-->
-                        <div class='modal-index4__box-button'>
-                            <a href=${desp.maps}>На карте</a>
-                        </div>
+                        <div style='display: flex; justify-content: space-between;align-items:flex-start;margin:70px 20px;'>
+                            <div class="modal-index4__box-left">    
+                                <div class="modal-index4__box-img"> 
+                                    <img src="${desp.img2}">
+                                </div>
+                            </div>
+                            <!-- Описание достопримечательности-->
+                            <div class='modal-index4__box-right'>
+                                <div class='modal-index4__box-right_title'>
+                                    <p>${desp.description}</p>
+                                </div>
+                                <!-- Кнопка для переадресации на карту-->
+                                <div class='modal-index4__box-right_button'>
+                                    <button href=${desp.maps}>На карте</button>
+                                </div>
+                            </div>
                     </div>
                 `;
 }

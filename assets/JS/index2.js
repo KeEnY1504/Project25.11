@@ -158,7 +158,7 @@ function renderCards() {
     bumbumbum.forEach(item => {
         dep__cards.innerHTML += `
             <div class="card ${item.filtr}" id="${item.id}">
-                <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
+                <div class="img" style="width: 200px; height: 150px;"><img src='${item.img}'></div>
                 <h3>${item.name}</h3>
             </div>
         `;
