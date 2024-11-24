@@ -30,7 +30,7 @@ function render(desp) {
                     <div class="modal-index4__box">
                     <button id="button-index4"><a href='index2.html' style='width: 100%;height:100%;display:flex'><img src="./assets/img/Arrow left(1).svg" alt=""></a></button>
                         <h1>${desp.name}</h1>
-                        <div style='display: flex; justify-content: space-between;align-items:flex-start;margin:70px 20px;'>
+                        <div id='box'>
                             <div class="modal-index4__box-left">    
                                 <div class="modal-index4__box-img"> 
                                     <img src="${desp.img2}">

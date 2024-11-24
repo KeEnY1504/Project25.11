@@ -287,7 +287,7 @@ body{
             justify-content: center;
             align-items: center;
             border-bottom: 5px solid #D9D2B0;
-            & .top-bottoms{
+            &-bottoms{
                 width: 500px;
                 display: flex;
                 justify-content: space-around;
@@ -714,6 +714,8 @@ body{
     }
 }
 
+
+
 .modal-index4{
     width: 100%;
     height: 100%;
@@ -722,15 +724,19 @@ body{
     justify-content: center;
     padding: 80px 0;
     &__box{
-        width: 80%;
+        width: 60%;
         height: 100%;
         background-color: white;
         border: 4px solid #BF9424;
         border-radius: 20px;
+        & #box{
+            display: flex; 
+            justify-content: space-between;
+            align-items:flex-start;
+            margin:70px 20px;  
+        }
         & h1{
             text-align: center;
-            height: 20px;
-            margin: 30px 0 20px 20px;
         }&-left{
             width: 60%;
             height: 40%;
@@ -828,9 +834,9 @@ body{
                 & .hamburger-menu{
                     & .open{
                         position: fixed;
-                        left: 34.8%;
+                        left: 28.2%;
                         float: right;
-                        width: 65%;
+                        width: 72%;
                         background-color:#000000c5;
                         display: flex;
                         flex-direction: column;
@@ -983,48 +989,6 @@ body{
             }
         }
     }
-    .slid2{
-        width: 100%;
-        height: 100%;
-        & p{
-            text-align: center;
-            width: 100%;
-            font-size: 150%;
-            margin: 30px 0;
-        }
-        &__boxs{
-            width: 80%;
-            height: 100%;
-            justify-content: space-between;
-            margin-bottom: 50px;
-            &-box{
-                width: 103%;
-                height: 100%;
-                align-items: center;
-                flex-direction: column;
-                
-                & img{
-                    width: 100%;
-                    height: 100%;
-                }
-                &__text-intro{
-                    width: 96.5%;
-                    height: 100%;
-                    justify-content:start;
-                    border-top: none;
-                    border-left: 5px solid #bf9324;
-                    & .intro{
-                        font-size: 130%;
-                        margin: 10px 0;
-                    }
-                    & .text{
-                        margin: 10px 0;
-                        font-size: 100%;
-                    }
-                }
-            }
-        }
-    }
     .maps{
         width: 100%;
         height: 100%;
@@ -1060,6 +1024,35 @@ body{
             text-align:center;
         }
     }
+    .dep{
+        width: 100%;
+        height: 100%;
+        &__box{
+            width: 90%;
+            & .top{
+                width: 100%;
+                height: 100%;
+                padding: 20px 0 20px 0;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                flex-direction: column-reverse;
+                &-bottoms{
+                    width: 100%;
+                    gap: 10px;
+                    flex-direction: column;
+                    & button{
+                        width: 80%;
+                        height: 100%;
+                        white-space:normal;
+                    }
+                }
+            }
+        }&__cards{
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
     .helping{
         width: 100%;
         height: 100%;
@@ -1155,7 +1148,51 @@ body{
             }
         }
     }
-    
+    .modal-index4{
+        & #button-index4{
+            display: none;
+        }
+        &__box{
+            width: 85%;
+            & #box{
+                flex-direction: column ;
+                margin: 20px 20px;
+            }
+            & h1{
+                width: 80%;
+                height: auto;
+                margin: 30px auto;
+            }
+            &-left{
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                    }&-img{
+                        width: 99.95%;
+                        height: 200px;
+                        
+                        & img{
+                            width: 100%;
+                        }
+                    }
+            &-right{
+                width: 100%;
+                margin: 40px 0 0 0;
+                &_title{
+                    width: 90%;
+                    margin: 0 auto;
+                    text-align: center;
+                }
+                &_button{
+                    width: 100%;
+                    & button{
+                        width: 80%;
+                        font-size: 100%;
+                    }
+                }
+            }
+        }
+    }
     
     .header__container-logo{
         margin-left: 10px;
