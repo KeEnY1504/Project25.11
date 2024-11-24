@@ -28,6 +28,7 @@ function render(desp) {
     const modal = document.getElementById('modal-index4');
     modal.innerHTML = `
                     <div class="modal-index4__box">
+                    <button id="button-index4"><a href='index2.html' style='width: 100%;height:100%;display:flex'><img src="./assets/img/Arrow left(1).svg" alt=""></a></button>
                         <h1>${desp.name}</h1>
                         <div style='display: flex; justify-content: space-between;align-items:flex-start;margin:70px 20px;'>
                             <div class="modal-index4__box-left">    
@@ -50,9 +51,6 @@ function render(desp) {
 }
 
 
-document.getElementById('button-index4').addEventListener('click', function(repindex) {
-    window.history.back();
-})
 
 
 

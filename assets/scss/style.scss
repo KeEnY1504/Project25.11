@@ -142,7 +142,7 @@ body{
   .slider {
     display: flex;
     width: 100%;
-    height: 852px;
+    height: 562px;
     margin: 0 auto 0 auto;
     padding-bottom: 90px ;
     padding-top: 90px;
@@ -150,10 +150,9 @@ body{
     border-top: 10px solid #D9D2B0;
         &__container{
             position: relative;
-            width: 1400px;
-            height: 852px;
+            width: 1000px;
+            height: 552px;
             margin: 0 auto;
-            overflow: hidden;
             &-block{
                 width: 100%;
                 height: 100%;
@@ -161,8 +160,8 @@ body{
             .prev-button,.next-button {
               position: absolute;
               top: 45%;
-              width: 160px;
-              height: 140px;
+              width: 110px;
+              height: 60px;
               border: 0;
 
               
@@ -179,7 +178,7 @@ body{
         & img{
             width: 100%;
             height: 100%;
-            object-fit: cover;
+
         }
   }
 .bloks{
@@ -192,7 +191,7 @@ body{
     align-items: center;
     justify-content: center;
     &__block1{
-        width: 1210px;
+        width: 80%;
         height: 476px;
         background-color: #ffffff;
         border: 5px solid #BF9424;
@@ -204,13 +203,14 @@ body{
         margin-bottom: 48px;
         & .intro{
             font-size: 50px;
+            text-align: center;
         }
         & p{
             font-size: 50px;
             color: #BF9424;
         }
         &-intro{
-            width: 1152px;
+            width: 90%;
             height: 325px;
             margin-top: 40px;
             border: 5px solid #10110ca4;
@@ -275,8 +275,9 @@ body{
         width: 900px;
         height: auto;
         margin:  50px auto;
-        background-color: rgba(194, 194, 194, 0.738);
+        background-color: white;
         border-radius: 25px;
+        border: 5px solid #BF9424;
         & .top{
             width: 100%;
             height: 40px;
@@ -285,7 +286,7 @@ body{
             gap:70px;
             justify-content: center;
             align-items: center;
-            border-bottom: 1px solid black;
+            border-bottom: 5px solid #D9D2B0;
             & .top-bottoms{
                 width: 500px;
                 display: flex;
@@ -321,12 +322,12 @@ body{
                 font-size: 18px;
                 background: url('../Перенесенное\ изображение\ \(2\).png') no-repeat 3px 1px white;
                 background-size: auto 90%;
-                border: 1px solid #000;
+                border: 3px solid #D9D2B0;
                 padding: 5px 5px 5px 40px;
                 &:focus {
                     outline: none;
                     background-color: #fff;
-                    box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+                    box-shadow: 0 0 0 5px #bf932446;
                   }
             }
         }
@@ -339,6 +340,7 @@ body{
             height: 240px;
             background-color: #fff;
             padding: 20px;
+            border: 5px solid #D9D2B0;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 &:hover{
@@ -359,68 +361,6 @@ body{
     }
 }
 
-.filtr{
-    position: fixed;
-    top: 0; 
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999998;
-    background-color: #26262600;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity .4s, visibility .4s;
-    &__modal{
-        width: 530px;
-        height: 420px;
-        background-color:aquamarine;
-        border-radius: 20px;
-        
-        &-fi{
-            width: 500px;
-            height: 230px;
-            margin: 30px auto;
-            display: flex;
-            justify-content: space-between;
-            & input{
-                margin-right: 5px;
-            }
-            & .list{
-                height: 200px;
-                display: flex;
-                gap: 10px;
-                flex-direction: column;
-            }
-        }& .submit{
-            width: 220px;
-            height: 50px;
-            position: relative;
-            top: 20px;
-            left: 28.5%;
-            border: 1px solid ;
-            border-radius: 5px;
-            &:hover{
-                color: black;
-            }
-        }
-    }
-    & img{
-        position: relative;
-        float: right;
-        top: -20px;
-        left: 30px;
-        cursor: pointer;
-        }
-    &.open{
-        visibility: visible;
-        opacity: 1;
-    
-    }
-}
 .delete{
     display: none;
 }.maps{
@@ -753,9 +693,9 @@ body{
 
 // index4
 #button-index4{
-    position: absolute;
-    top: 18%;
-    left: 5%;
+    position: relative;
+    top: -46px;
+    left: -55px;
     width: 40px;
     height: 40px;
     border: 0;
@@ -777,24 +717,27 @@ body{
 .modal-index4{
     width: 100%;
     height: 100%;
-    background-color: #00000080;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 80px 0;
     &__box{
-        width: 1200px;
+        width: 80%;
         height: 100%;
-        background-color: #bf9324;
+        background-color: white;
+        border: 4px solid #BF9424;
         border-radius: 20px;
         & h1{
-            
+            text-align: center;
             height: 20px;
-            margin: 20px 0 20px 20px;
+            margin: 30px 0 20px 20px;
         }&-left{
-            width: 30%;
-            height: auto;
+            width: 60%;
+            height: 40%;
             margin-left: 40px;
+            -webkit-box-shadow: 0px 0px 50px 0px rgba(217, 210, 176, 0.85);
+            -moz-box-shadow: 0px 0px 50px 0px rgba(217, 210, 176, 0.85);
+            box-shadow: 0px 0px 50px 0px rgba(217, 210, 176, 0.85);
         }&-right{
             width: 30%;
             margin-right: 40px;
@@ -804,9 +747,9 @@ body{
             &_title{
                 width: 100%;
                 height: 100%;
-                background-color: #ff0000;
-                padding: 10px;
+                border: 5px solid rgba(16, 17, 12, 0.2901960784);
                 border-radius: 10px;
+                padding: 10px;
                 font-size: 17px;
             }
             &_button{
@@ -814,18 +757,24 @@ body{
                 height: 40px;
                 display: flex;
                 align-items: center;
-                justify-content: center;    
+                justify-content: center;
+                
                 & button{
                     width: 120px;
                     height: 40px;
-                    border: 0;
+                    border: 2px solid #BF9424;
                     border-radius: 10px;
+                    background-color: white;
+                    cursor: pointer;
+                    &:hover{
+                        background-color: #BF9424;
+                    }
                 }
             }
         }
         &-img{
-            width: 190%;
-            height: 30%;
+            width: 100%;
+            height: 400px;
             & img{
                 width: 100%;
                 height: 100%;
@@ -837,19 +786,19 @@ body{
     display: flex;
     justify-content: center;
     margin-top: 20px;
-}
-
-#pagination button {
-    margin: 10px 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border: 0;
-    border-radius: 5px;
-}
-
-#pagination button.active {
-    background-color: #007bff;
-    color: white;
+    & button{
+        margin: 10px 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        border: 0;
+        border-radius: 5px;
+        background-color: #D9D2B0;
+        &.active{
+            background-color: #BF9424;
+            color: white;
+            
+        }
+    }
 }
 
 
@@ -872,7 +821,7 @@ body{
             top: -90px; /* Отступ сверху */
             z-index: 1; /* Устанавливаем выше фона */
             background-color: #F0F0F2;
-            &-logo p{
+            &-logo a{
                 color: black;
             }
             &-navbar{
