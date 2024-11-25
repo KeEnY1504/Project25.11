@@ -14,6 +14,14 @@
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
 }
+@keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+} 
 
 
 
@@ -334,6 +342,7 @@ body{
     }&__cards{
         display: grid;
         grid-template-columns: repeat(3, 2fr);
+        justify-content: center;
         gap: 20px;
         padding: 20px;
         & .card {
@@ -501,13 +510,16 @@ body{
 
 .helping{
     width: 100%;
-    height: 620px;
-    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     background-color: #fffffff0;
     &__container{
         width: 1000px;
         height: 168px;
-        padding: 50px 0;
+        padding: 0 0 50px 0;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -808,6 +820,59 @@ body{
 }
 
 
+.loader-display{
+    width: 315%;
+    height: 90px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & .loader{
+        width: 48px;
+        height: 48px;
+        border: 2px solid #BF9424;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        &::after{
+            content: '';  
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #D9D2B0;
+            width: 6px;
+            height: 6px;
+            transform: translate(150%, 150%);
+            border-radius: 50%;
+        }&::before{
+            content: '';  
+            box-sizing: border-box;
+            position: absolute;
+            background: #D9D2B0;
+            width: 6px;
+            height: 6px;
+            transform: translate(150%, 150%);
+            border-radius: 50%;
+            left: auto;
+            top: auto;
+            right: 0;
+            bottom: 0;
+            transform: translate(-150%, -150%);
+        }
+        @keyframes rotation {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+        } 
+    }
+}
+
 
 
 @media only screen and (max-width: 768px) {
@@ -1050,6 +1115,9 @@ body{
             }
         }&__cards{
             grid-template-columns: repeat(1, 1fr);
+
+        }& .loader-display{
+            left: 1%;
         }
     }
 
