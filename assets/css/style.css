@@ -902,21 +902,19 @@ body {
     background-color: rgba(0, 0, 0, 0.7725490196);
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: center;
   }
   .header__container-navbar .hamburger-menu .open .close {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 20px;
     float: right;
-    margin-right: 2.5%;
-    margin-top: 20px;
+    right: 8px;
   }
   .header__container-navbar .hamburger-menu .open ul {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
+    top: 80px;
     gap: 20px;
   }
   .header__container-navbar .hamburger-menu .open ul .button {
@@ -1129,6 +1127,7 @@ body {
   .helping__container {
     width: 100%;
     height: 100%;
+    margin-top: 20px;
   }
   .helping__container-title {
     font-size: 200%;

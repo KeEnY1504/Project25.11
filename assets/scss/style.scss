@@ -905,21 +905,19 @@ body{
                         background-color:#000000c5;
                         display: flex;
                         flex-direction: column;
-                        align-items: end;
+                        align-items: center;
                         
                         & .close{
-                            position: relative;
-                            width: 100%;
-                            height: 100%;
+                            position: absolute;
+                            top: 20px;
                             float: right;
-                            margin-right: 2.5%;
-                            margin-top: 20px;
+                            right: 8px;
                         }
                         & ul{
-                            position: relative;
+                            position: absolute;
                             display: flex;
                             flex-direction: column;
-                            margin-right: 10px;
+                            top: 80px;
                             gap: 20px;
                             & .button{
                                 color: white;
@@ -1128,6 +1126,7 @@ body{
         &__container{
             width: 100%;
             height: 100%;
+            margin-top: 20px;
             &-title{
                 font-size: 200%;
             }& p{
