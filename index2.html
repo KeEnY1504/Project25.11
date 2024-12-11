@@ -50,60 +50,38 @@
         <div class="dep__box">
             <div class="top">
                 <div class="top-bottoms">
-                    <button class="button_filtr" id='filtr-1'>Архитектурные сооружения</button>
-                    <p>|</p>
-                    <button class="button_filtr" id='filtr-2'>Музеи</button>
-                    <p>|</p>
-                    <button class="button_filtr" id='filtr-3'>Все</button>
+                    <label>
+                        Сортировка
+                            <select id="sort">
+                                <option value="none">Без сортировки</option>
+                                <option value="popularity">По популярности (высокая)</option>
+                                <option value="-popularity">По популярности (низкая)</option>
+                            </select>
+                    </label>
+                    <label>
+                        Фильтрация
+                            <select id="filtrs">
+                                <option value="">Без фильтра</option>
+                                <option value="all">Все</option>
+                                <option value="district">По району</option>
+                                <option value="type">По типу</option>
+                            </select>
+                    </label>
                 </div>
                 <input id='search_input' type="search">
+            </div>
+            <div id="result">
+                <!-- буги буги))) -->
             </div>
             <div class="dep__cards" id="dep__cards">
                 <div class="loader-display">
                     <span class="loader"></span>
                 </div>
-                <!-- <div class="card str-1 bam" id="1">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"><img style="width: 100%; height: 100%;" src="./assets/img/img_in_api/maik2.jpg" alt=""></div>
-                    <h3>Дербентский маяк</h3>
-                </div>
-                <div class="card str-1" id="2">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Кырхляр</h3>
-                </div>
-                <div class="card str-1" id="3">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Парк имени Низами Гянджеви</h3>
-                </div>
-                <div class="card str-1" id="4">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Дербентская стена</h3>
-                </div>
-                <div class="card str-1 bum" id="5">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Нарын-кала</h3>
-                </div>
-                <div class="card str-2" id="6">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Домик Петра I. </h3>
-                </div>
-                <div class="card str-2" id="7">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Келе-Нумаз</h3>
-                </div>
-                <div class="card str-2" id="8">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Церковь Святого Всеспасителя</h3>
-                </div>
-                <div class="card str-2" id="9">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Дербентская Джума-мечеть</h3>
-                </div>
-                <div class="card str-2" id="10">
-                    <div class="img" style="background-color: black; width: 200px; height: 150px;"></div>
-                    <h3>Церковь Покрова</h3>
-                </div> -->
+                <!-- прогрузка карточек -->
             </div>
-            <div id="pagination"></div>
+            <div id="pagination">
+                
+            </div>
         </div>
         <script src="./assets/JS/index2.js"></script>
     </section>
