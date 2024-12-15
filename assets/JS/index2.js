@@ -1,12 +1,12 @@
 // Функция для выполнения запроса к API
-function fetchData(sortBy = '', searchQuery = '', page = 1) {
+function fetchData(sortBy = '', filtr = '', page = 1) {
   const url = new URL('https://6729b8f86d5fa4901b6e13bc.mockapi.io/attractions');
   url.searchParams.append('page', page); // Добавляем параметр страницы
   url.searchParams.append('limit', 6); // Ограничиваем количество элементов на странице
 
   // Добавляем параметры сортировки и поиска, если они есть
   if (sortBy) url.searchParams.append('sortBy', sortBy);
-  if (searchQuery) url.searchParams.append('title', searchQuery);
+  if (filtr) url.searchParams.append('filter', filtr);
 
   fetch(url, {
       method: 'GET',
@@ -21,7 +21,8 @@ function fetchData(sortBy = '', searchQuery = '', page = 1) {
   .then(data => {
       renderCards(data); // Отображаем карточки
       updatePagination(page); // Обновляем пагинацию
-      showResult(sortBy, filtr)
+      showResult(sortBy, filtr);
+      // updateSearch(sortBy,filtr,page)
   })
   .catch(error => {
       console.error('Ошибка:', error);
@@ -60,15 +61,15 @@ function renderCards(data) {
       let sortBy = '';
       if (selectedText === 'Без сортировки') {
           sortBy = '';
-          updateSearch(sortBy);
+          updateSearch(sortBy, '', '');
           showResult(sortBy, '');
       } else if (selectedText === 'По популярности (низкая)') {
           sortBy = '-popularity';
-          updateSearch(sortBy);
+          updateSearch(sortBy, '', '');
           showResult(sortBy, '');
       } else if (selectedText === 'По популярности (высокая)') {
           sortBy = 'popularity';
-          updateSearch(sortBy);
+          updateSearch(sortBy, '', '');
           showResult(sortBy, '');
       }
     
@@ -84,15 +85,15 @@ function renderCards(data) {
 
       if ( selectedText === 'Все') {
         filtr = 'all';
-        updateSearch('', filtr);
+        updateSearch('', filtr, '');
         showResult('', filtr);
       }else if (selectedText === 'По району') {
-        filtr = 'district'
-        updateSearch('', filtr);
+        filtr = 'bam'
+        updateSearch('', filtr, '');
         showResult('', filtr);
       }else if (selectedOption === 'По типу') {
-        filtr = 'type';
-        updateSearch('', filtr);
+        filtr = 'bum';
+        updateSearch('', filtr, '');
         showResult('', filtr);
       }
       fetchData('',filtr,'')
@@ -145,8 +146,15 @@ function getUrlParam(param) {
 }
 
 // Функция для обновления URL с параметром сортировки
-function updateSearch(sortBy, filtr) {
-  window.location.href = `index2.html?sortBy=${sortBy}&filtr=${filtr}#dep`;
+function updateSearch(sortBy, filtr, page = 0) {
+  // Создаем новый URL с обновленными параметрами
+  const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}#dep`;
+
+  // Обновляем URL без перезагрузки страницы
+  window.history.pushState({ path: newUrl }, '', newUrl);
+
+  // Вызываем функцию fetchData для обновления данных
+  fetchData(sortBy, filtr, page);
 }
 
 // Инициализация данных
