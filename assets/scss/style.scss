@@ -294,7 +294,7 @@ body{
             gap:70px;
             justify-content: center;
             align-items: center;
-            border-bottom: 5px solid #D9D2B0;
+
             &-bottoms{
                 width: 500px;
                 display: flex;
@@ -331,6 +331,18 @@ body{
                     box-shadow: 0 0 0 5px #bf932446;
                   }
             }
+        }& #result{
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 25px;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #D9D2B0;
         }
     }& #pagination {
         display: flex;
@@ -338,6 +350,7 @@ body{
         align-items: center;
         gap: 10px;
         margin-top: 20px;
+        border-top: 5px solid #D9D2B0;
         & button{
             margin: 10px 5px;
             padding: 5px 10px;

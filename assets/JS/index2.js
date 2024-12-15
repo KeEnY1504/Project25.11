@@ -6,27 +6,26 @@ function fetchData(sortBy = '', filtr = '', page = 1) {
 
   // Добавляем параметры сортировки и поиска, если они есть
   if (sortBy) url.searchParams.append('sortBy', sortBy);
-  if (filtr) url.searchParams.append('filter', filtr);
+  if (filtr && filtr !== 'all') url.searchParams.append('filter', filtr);
 
   fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
   })
-  .then(res => {
+    .then(res => {
       if (res.ok) {
-          return res.json();
+        return res.json();
       }
       throw new Error('Ошибка при загрузке данных');
-  })
-  .then(data => {
+    })
+    .then(data => {
       renderCards(data); // Отображаем карточки
       updatePagination(page); // Обновляем пагинацию
-      showResult(sortBy, filtr);
-      // updateSearch(sortBy,filtr,page)
-  })
-  .catch(error => {
+      showResult(sortBy, filtr); // Отображаем результат
+    })
+    .catch(error => {
       console.error('Ошибка:', error);
-  });
+    });
 }
 
 // Функция для отображения карточек
@@ -34,93 +33,54 @@ function renderCards(data) {
   const dep__cards = document.getElementById('dep__cards');
   dep__cards.innerHTML = ''; // Очищаем контейнер перед добавлением новых карточек
 
+  if (data.length === 0) {
+    dep__cards.innerHTML = '<p>Нет данных для отображения.</p>';
+    return;
+  }
+
   data.forEach(item => {
-      dep__cards.innerHTML += `
-          <div class="card ${item.filtr}" id="${item.id}">
-              <div class="img" style="width: 200px; height: 150px;"><img src='${item.img}' alt='${item.name}'></div>
-              <h3>${item.name}</h3>
-          </div>
-      `;
+    dep__cards.innerHTML += `
+      <div class="card ${item.filtr}" id="${item.id}">
+        <div class="img" style="width: 200px; height: 150px;"><img src='${item.img}' alt='${item.name}'></div>
+        <h3>${item.name}</h3>
+      </div>
+    `;
   });
 
   // Добавляем обработчик клика для карточек
   document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', (event) => {
-          event.preventDefault();
-          const cardId = card.id;
-          nextIndex(cardId);
-      });
+    card.addEventListener('click', (event) => {
+      event.preventDefault();
+      const cardId = card.id;
+      nextIndex(cardId);
+    });
   });
-
-  // Обработчик изменения сортировки
-  document.getElementById('sort').addEventListener('change', () => {
-      const sortSelect = document.getElementById('sort');
-      const selectedOption = sortSelect.options[sortSelect.selectedIndex];
-      const selectedText = selectedOption.textContent;
-    
-      let sortBy = '';
-      if (selectedText === 'Без сортировки') {
-          sortBy = '';
-          updateSearch(sortBy, '', '');
-          showResult(sortBy, '');
-      } else if (selectedText === 'По популярности (низкая)') {
-          sortBy = '-popularity';
-          updateSearch(sortBy, '', '');
-          showResult(sortBy, '');
-      } else if (selectedText === 'По популярности (высокая)') {
-          sortBy = 'popularity';
-          updateSearch(sortBy, '', '');
-          showResult(sortBy, '');
-      }
-    
-      fetchData(sortBy); // Передаём параметр сортировки в fetchData
-  });
-
-  document.getElementById('filtrs').addEventListener('change', () => {
-      const filtrsSekect = document.getElementById('filtrs');
-      const selectedOption = filtrsSekect.options[filtrsSekect.selectedIndex];
-      const selectedText = selectedOption.textContent;
-
-      let filtr = '';
-
-      if ( selectedText === 'Все') {
-        filtr = 'all';
-        updateSearch('', filtr, '');
-        showResult('', filtr);
-      }else if (selectedText === 'По району') {
-        filtr = 'bam'
-        updateSearch('', filtr, '');
-        showResult('', filtr);
-      }else if (selectedOption === 'По типу') {
-        filtr = 'bum';
-        updateSearch('', filtr, '');
-        showResult('', filtr);
-      }
-      fetchData('',filtr,'')
-  })
 }
 
 // Функция для обновления пагинации
 function updatePagination(currentPage) {
   const list = document.getElementById('pagination');
 
-  list.innerHTML = `
-      <button id="prevButton">&leftarrow;</button>
-      <p>${currentPage}</p>
-      <button id="nextButton">&rightarrow;</button>
-  `;
 
+
+  list.innerHTML = `
+    <button id="prevButton">&leftarrow;</button>
+    <p>${currentPage}</p>
+    <button id="nextButton">&rightarrow;</button>
+  `;
   const prevButton = document.getElementById('prevButton');
   const nextButton = document.getElementById('nextButton');
+  
+  currentPage = Number(currentPage);
 
   prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-          fetchData('', '', currentPage - 1); // Переход на предыдущую страницу
-      }
+    if (currentPage > 1) {
+      fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage - 1); // Переход на предыдущую страницу
+    }
   });
 
   nextButton.addEventListener('click', () => {
-      fetchData('', '', currentPage + 1); // Переход на следующую страницу
+    fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage + 1); // Переход на следующую страницу
   });
 }
 
@@ -128,11 +88,27 @@ function updatePagination(currentPage) {
 function showResult(sortBy, filtr) {
   const result = document.getElementById('result');
 
-  result.innerHTML = `
-    <p> ${sortBy}  ${filtr}  </p>
-  `
-}
+  if (sortBy === '') {
+    sortBy = 'Без сортировки';
+  } else if (sortBy === 'rating') {
+    sortBy = 'По рейтингу (сначала высокий)';
+  } else if (sortBy === '-rating') {
+    sortBy = 'По рейтингу (сначала низкий)';
+  }
 
+  if (filtr === '') {
+    filtr = 'Без фильтрации';
+  } else if( filtr === 'bam') {
+    filtr = 'По району';
+  } else if( filtr === 'bum') {
+    filtr = 'По типу';
+  }
+
+  result.innerHTML = `
+    <p>Сортировка: ${sortBy || 'Без сортировки'}</p>
+    <p>Фильтр: ${filtr || 'Все'}</p>
+  `;
+}
 
 // Функция для перехода на следующую страницу
 function nextIndex(cardId) {
@@ -146,7 +122,7 @@ function getUrlParam(param) {
 }
 
 // Функция для обновления URL с параметром сортировки
-function updateSearch(sortBy, filtr, page = 0) {
+function updateSearch(sortBy, filtr, page ) {
   // Создаем новый URL с обновленными параметрами
   const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}#dep`;
 
@@ -157,5 +133,41 @@ function updateSearch(sortBy, filtr, page = 0) {
   fetchData(sortBy, filtr, page);
 }
 
+// Обработчик изменения сортировки
+document.getElementById('sort').addEventListener('change', () => {
+  const sortSelect = document.getElementById('sort');
+  const selectedOption = sortSelect.options[sortSelect.selectedIndex];
+  const selectedText = selectedOption.textContent;
+
+  let sortBy = '';
+  if (selectedText === 'Без сортировки') {
+    sortBy = '';
+  } else if (selectedText === 'По популярности (низкая)') {
+    sortBy = '-rating';
+  } else if (selectedText === 'По популярности (высокая)') {
+    sortBy = 'rating';
+  }
+  updateSearch(sortBy, getUrlParam('filtr') || 'all', getUrlParam('page') || 1);
+});
+
+// Обработчик изменения фильтра
+document.getElementById('filtrs').addEventListener('change', () => {
+  const filtrsSelect = document.getElementById('filtrs');
+  const selectedOption = filtrsSelect.options[filtrsSelect.selectedIndex];
+  const selectedText = selectedOption.textContent;
+
+  let filtr = '';
+  if (selectedText === 'Все') {
+    filtr = 'all';
+  } else if (selectedText === 'По району') {
+    filtr = 'bam';
+  } else if (selectedText === 'По типу') {
+    filtr = 'bum';
+  }else if (selectedText === ''){
+    filtr = ''
+  }
+  updateSearch(getUrlParam('sortBy') || '', filtr, getUrlParam('page') || 1);
+});
+
 // Инициализация данных
-fetchData();
+fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), getUrlParam('page') || 1);

@@ -291,7 +291,6 @@ body {
   gap: 70px;
   justify-content: center;
   align-items: center;
-  border-bottom: 5px solid #D9D2B0;
 }
 .dep__box .top-bottoms {
   width: 500px;
@@ -328,12 +327,26 @@ body {
   background-color: #fff;
   box-shadow: 0 0 0 5px rgba(191, 147, 36, 0.2745098039);
 }
+.dep__box #result {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 25px;
+  padding: 20px 0;
+  text-align: center;
+  border-bottom: 5px solid #D9D2B0;
+}
 .dep #pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   margin-top: 20px;
+  border-top: 5px solid #D9D2B0;
 }
 .dep #pagination button {
   margin: 10px 5px;
