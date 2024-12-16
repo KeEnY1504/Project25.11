@@ -1,12 +1,16 @@
 // Функция для выполнения запроса к API
-function fetchData(sortBy = '', filtr = '', page = 1) {
+function fetchData(sortBy = '', filtr = '', page = 1, order = '', search = '') {
   const url = new URL('https://6729b8f86d5fa4901b6e13bc.mockapi.io/attractions');
   url.searchParams.append('page', page); // Добавляем параметр страницы
   url.searchParams.append('limit', 6); // Ограничиваем количество элементов на странице
 
   // Добавляем параметры сортировки и поиска, если они есть
-  if (sortBy) url.searchParams.append('sortBy', sortBy);
+  if (sortBy) {
+    url.searchParams.append('sortBy', sortBy);
+    url.searchParams.append('order', order); // Добавляем параметр order
+  }
   if (filtr && filtr !== 'all') url.searchParams.append('filter', filtr);
+  if (search) url.searchParams.append('search', search);
 
   fetch(url, {
     method: 'GET',
@@ -60,9 +64,6 @@ function renderCards(data) {
 // Функция для обновления пагинации
 function updatePagination(currentPage) {
   const list = document.getElementById('pagination');
-
-
-
   list.innerHTML = `
     <button id="prevButton">&leftarrow;</button>
     <p>${currentPage}</p>
@@ -70,18 +71,30 @@ function updatePagination(currentPage) {
   `;
   const prevButton = document.getElementById('prevButton');
   const nextButton = document.getElementById('nextButton');
-  
+
   currentPage = Number(currentPage);
 
   prevButton.addEventListener('click', () => {
     if (currentPage > 1) {
-      fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage - 1); // Переход на предыдущую страницу
+      updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage - 1);
     }
   });
 
   nextButton.addEventListener('click', () => {
-    fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage + 1); // Переход на следующую страницу
+    updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage + 1);
   });
+}
+
+// Функция для поиска
+function searchInput() {
+  const searchInput = document.getElementById('search_input');
+
+  const debouncedFetchData = debounce(() => {
+    let value = searchInput.value.trim().toLowerCase();
+    updateSearch('','', 1, '', value); // Сбрасываем страницу на 1 при поиске
+  }, 3000); // 300ms debounce delay
+
+  searchInput.addEventListener('input', debouncedFetchData);
 }
 
 // Функция для вывода результата
@@ -98,9 +111,11 @@ function showResult(sortBy, filtr) {
 
   if (filtr === '') {
     filtr = 'Без фильтрации';
-  } else if( filtr === 'bam') {
+  } else if (filtr === 'all') {
+    filtr = 'Все';
+  } else if (filtr === 'bam') {
     filtr = 'По району';
-  } else if( filtr === 'bum') {
+  } else if (filtr === 'bum') {
     filtr = 'По типу';
   }
 
@@ -122,15 +137,15 @@ function getUrlParam(param) {
 }
 
 // Функция для обновления URL с параметром сортировки
-function updateSearch(sortBy, filtr, page ) {
+function updateSearch(sortBy, filtr, page, order = '', search = '') {
   // Создаем новый URL с обновленными параметрами
-  const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}#dep`;
+  const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}&order=${order}&search=${search}#dep`;
 
   // Обновляем URL без перезагрузки страницы
   window.history.pushState({ path: newUrl }, '', newUrl);
 
   // Вызываем функцию fetchData для обновления данных
-  fetchData(sortBy, filtr, page);
+  fetchData(sortBy, filtr, page, order, search);
 }
 
 // Обработчик изменения сортировки
@@ -140,14 +155,19 @@ document.getElementById('sort').addEventListener('change', () => {
   const selectedText = selectedOption.textContent;
 
   let sortBy = '';
+  let order = 'desc'; // По умолчанию сортировка по убыванию
+
   if (selectedText === 'Без сортировки') {
     sortBy = '';
   } else if (selectedText === 'По популярности (низкая)') {
     sortBy = '-rating';
+    order = 'asc'; // Сортировка по возрастанию
   } else if (selectedText === 'По популярности (высокая)') {
     sortBy = 'rating';
+    order = 'desc'; // Сортировка по убыванию
   }
-  updateSearch(sortBy, getUrlParam('filtr') || 'all', getUrlParam('page') || 1);
+
+  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order);
 });
 
 // Обработчик изменения фильтра
@@ -163,11 +183,24 @@ document.getElementById('filtrs').addEventListener('change', () => {
     filtr = 'bam';
   } else if (selectedText === 'По типу') {
     filtr = 'bum';
-  }else if (selectedText === ''){
-    filtr = ''
   }
   updateSearch(getUrlParam('sortBy') || '', filtr, getUrlParam('page') || 1);
 });
+
+// Обработчик события для поиска
+document.getElementById('search_input').addEventListener('input', function () {
+  const inputValue = this.value.trim().toLowerCase();
+  updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), 1, '', inputValue); // Сбрасываем страницу на 1 при поиске
+});
+
+// Функция debounce
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
 // Инициализация данных
 fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), getUrlParam('page') || 1);
