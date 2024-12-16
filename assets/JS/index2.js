@@ -91,8 +91,8 @@ function searchInput() {
 
   const debouncedFetchData = debounce(() => {
     let value = searchInput.value.trim().toLowerCase();
-    updateSearch('','', 1, '', value); // Сбрасываем страницу на 1 при поиске
-  }, 3000); // 300ms debounce delay
+    updateSearch(getUrlParam('sortBy'),getUrlParam('filtr'), 1, getUrlParam('order'), value); // Сбрасываем страницу на 1 при поиске
+  }, 30000); // 300ms debounce delay
 
   searchInput.addEventListener('input', debouncedFetchData);
 }
@@ -160,14 +160,14 @@ document.getElementById('sort').addEventListener('change', () => {
   if (selectedText === 'Без сортировки') {
     sortBy = '';
   } else if (selectedText === 'По популярности (низкая)') {
-    sortBy = '-rating';
+    sortBy = 'rating';
     order = 'asc'; // Сортировка по возрастанию
   } else if (selectedText === 'По популярности (высокая)') {
     sortBy = 'rating';
     order = 'desc'; // Сортировка по убыванию
   }
 
-  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order);
+  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order, getUrlParam('search'));
 });
 
 // Обработчик изменения фильтра
@@ -190,7 +190,7 @@ document.getElementById('filtrs').addEventListener('change', () => {
 // Обработчик события для поиска
 document.getElementById('search_input').addEventListener('input', function () {
   const inputValue = this.value.trim().toLowerCase();
-  updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), 1, '', inputValue); // Сбрасываем страницу на 1 при поиске
+  updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), 1, getUrlParam('order'), inputValue); // Сбрасываем страницу на 1 при поиске
 });
 
 // Функция debounce
@@ -203,4 +203,4 @@ function debounce(func, wait) {
 }
 
 // Инициализация данных
-fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), getUrlParam('page') || 1);
+fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), getUrlParam('page') || 1, getUrlParam('order'), getUrlParam('search'));
