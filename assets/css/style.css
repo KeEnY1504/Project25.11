@@ -390,10 +390,6 @@ body {
   height: 100%;
 }
 
-.delete {
-  display: none;
-}
-
 .maps {
   width: 100%;
   height: 1093px;
@@ -825,6 +821,109 @@ body {
   height: 100%;
 }
 
+.reviews {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding: 40px 0;
+}
+.reviews h1 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reviews h2 {
+  border-bottom: 2px solid red;
+  width: 240px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.reviews__modal {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.reviews__modal #review-form {
+  width: 40%;
+  height: 70%;
+  display: none;
+  position: fixed;
+  top: 15%;
+  left: auto;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  border: 2px solid #BF9424;
+  z-index: 999999;
+}
+.reviews__modal #review-form.open {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.reviews__modal #review-form.open #close_modal {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  cursor: pointer;
+}
+.reviews__modal #review-form.open input {
+  width: 30%;
+  height: 30px;
+  font-size: 20px;
+  margin-left: 20px;
+}
+.reviews__modal #review-form.open textarea {
+  width: 80%;
+  height: 80%;
+  margin-left: 20px;
+}
+.reviews__modal #review-form.open button {
+  position: relative;
+  width: 40%;
+  height: 55px;
+  padding: 10px;
+  text-align: center;
+  border: 0;
+  color: red;
+}
+.reviews #reviews-list {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.reviews #reviews-list .review {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border: 2px solid #BF9424;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.reviews #reviews-list .review .rev {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.reviews #reviews-list .review .delete {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
 .loader-display {
   width: 315%;
   height: 90px;
@@ -905,6 +1004,10 @@ body {
   .header__container-logo a {
     color: black;
   }
+  .header__container-navbar .hamburger-menu {
+    position: absolute;
+    right: 20px;
+  }
   .header__container-navbar .hamburger-menu .open {
     position: fixed;
     left: 28.2%;
@@ -914,6 +1017,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1000000000000000000000000000000000000000000000000;
   }
   .header__container-navbar .hamburger-menu .open .close {
     position: absolute;
@@ -1101,6 +1205,7 @@ body {
   .dep {
     width: 100%;
     height: 100%;
+    padding-top: 5px;
   }
   .dep__box {
     width: 90%;
@@ -1268,6 +1373,44 @@ body {
   .modal-index4__box-right_button button {
     width: 80%;
     font-size: 100%;
+  }
+  .reviews {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 0;
+  }
+  .reviews h1 {
+    width: 100%;
+    text-align: center;
+  }
+  .reviews h2 {
+    width: 100%;
+    text-align: center;
+  }
+  .reviews__modal #review-form.open {
+    width: 80%;
+    height: 50%;
+  }
+  .reviews__modal #review-form.open input {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .reviews__modal #review-form.open textarea {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .reviews__modal #review-form.open button {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .reviews #reviews-list {
+    width: 85%;
+  }
+  .reviews #reviews-list .review {
+    width: 100%;
+    margin: 0 auto;
   }
   .header__container-logo {
     margin-left: 10px;
