@@ -167,7 +167,7 @@ document.getElementById('sort').addEventListener('change', () => {
     order = 'desc'; // Сортировка по убыванию
   }
 
-  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order, getUrlParam('search'));
+  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order, getUrlParam('search') || '');
 });
 
 // Обработчик изменения фильтра
@@ -184,7 +184,7 @@ document.getElementById('filtrs').addEventListener('change', () => {
   } else if (selectedText === 'По типу') {
     filtr = 'bum';
   }
-  updateSearch(getUrlParam('sortBy') || '', filtr, getUrlParam('page') || 1);
+  updateSearch(getUrlParam('sortBy') || '', filtr, getUrlParam('page') || 1, getUrlParam('order') || '', getUrlParam('search') || '');
 });
 
 // Обработчик события для поиска

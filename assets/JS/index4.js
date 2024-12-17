@@ -44,12 +44,8 @@ function render(desp) {
                                 <div class='modal-index4__box-right_button'>
                                     <a href='${desp.maps}'>На карте</a>
                                 </div>
-                            </div>
+                            </div>       
                     </div>
                 `;
 }
-
-
-
-
 
