@@ -1,152 +1,150 @@
-// Функция для выполнения запроса к API
-function fetchData(sortBy = '', filtr = '', page = 1, order = '', search = '') {
-  const url = new URL('https://6729b8f86d5fa4901b6e13bc.mockapi.io/attractions');
-  url.searchParams.append('page', page); // Добавляем параметр страницы
-  url.searchParams.append('limit', 6); // Ограничиваем количество элементов на странице
-
-  // Добавляем параметры сортировки и поиска, если они есть
-  if (sortBy) {
-    url.searchParams.append('sortBy', sortBy);
-    url.searchParams.append('order', order); // Добавляем параметр order
-  }
-  if (filtr && filtr !== 'all') url.searchParams.append('filter', filtr);
-  if (search) url.searchParams.append('search', search);
-
-  fetch(url, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      throw new Error('Ошибка при загрузке данных');
-    })
-    .then(data => {
-      renderCards(data); // Отображаем карточки
-      updatePagination(page); // Обновляем пагинацию
-      showResult(sortBy, filtr); // Отображаем результат
-    })
-    .catch(error => {
-      console.error('Ошибка:', error);
-    });
-}
-
-// Функция для отображения карточек
-function renderCards(data) {
-  const dep__cards = document.getElementById('dep__cards');
-  dep__cards.innerHTML = ''; // Очищаем контейнер перед добавлением новых карточек
-
-  if (data.length === 0) {
-    dep__cards.innerHTML = '<p>Нет данных для отображения.</p>';
-    return;
+class DataFetcher {
+  constructor(apiUrl) {
+    this.apiUrl = apiUrl; // Базовый URL API
+    this.currentPage = 1; // Текущая страница
+    this.sortBy = ''; // Параметр сортировки
+    this.order = ''; // Порядок сортировки
+    this.filtr = ''; // Параметр фильтрации
+    this.search = ''; // Параметр поиска
   }
 
-  data.forEach(item => {
-    dep__cards.innerHTML += `
-      <div class="card ${item.filtr}" id="${item.id}">
-        <div class="img" style="width: 200px; height: 150px;"><img src='${item.img}' alt='${item.name}'></div>
-        <h3>${item.name}</h3>
-      </div>
-    `;
-  });
+  // Метод для формирования URL с параметрами
+  buildUrl() {
+    const url = new URL(this.apiUrl);
+    url.searchParams.append('page', this.currentPage);
+    url.searchParams.append('limit', 6);
 
-  // Добавляем обработчик клика для карточек
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', (event) => {
-      event.preventDefault();
-      const cardId = card.id;
-      nextIndex(cardId);
-    });
-  });
-}
-
-// Функция для обновления пагинации
-function updatePagination(currentPage) {
-  const list = document.getElementById('pagination');
-  list.innerHTML = `
-    <button id="prevButton">&leftarrow;</button>
-    <p>${currentPage}</p>
-    <button id="nextButton">&rightarrow;</button>
-  `;
-  const prevButton = document.getElementById('prevButton');
-  const nextButton = document.getElementById('nextButton');
-
-  currentPage = Number(currentPage);
-
-  prevButton.addEventListener('click', () => {
-    if (currentPage > 1) {
-      updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage - 1);
+    if (this.sortBy) {
+      url.searchParams.append('sortBy', this.sortBy);
+      url.searchParams.append('order', this.order);
     }
-  });
+    if (this.filtr && this.filtr !== 'all') url.searchParams.append('filter', this.filtr);
+    if (this.search) url.searchParams.append('search', this.search);
 
-  nextButton.addEventListener('click', () => {
-    updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), currentPage + 1);
-  });
-}
-
-// Функция для поиска
-function searchInput() {
-  const searchInput = document.getElementById('search_input');
-
-  const debouncedFetchData = debounce(() => {
-    let value = searchInput.value.trim().toLowerCase();
-    updateSearch(getUrlParam('sortBy'),getUrlParam('filtr'), 1, getUrlParam('order'), value); // Сбрасываем страницу на 1 при поиске
-  }, 30000); // 300ms debounce delay
-
-  searchInput.addEventListener('input', debouncedFetchData);
-}
-
-// Функция для вывода результата
-function showResult(sortBy, filtr) {
-  const result = document.getElementById('result');
-
-  if (sortBy === '') {
-    sortBy = 'Без сортировки';
-  } else if (sortBy === 'rating') {
-    sortBy = 'По рейтингу (сначала высокий)';
-  } else if (sortBy === '-rating') {
-    sortBy = 'По рейтингу (сначала низкий)';
+    return url;
   }
 
-  if (filtr === '') {
-    filtr = 'Без фильтрации';
-  } else if (filtr === 'all') {
-    filtr = 'Все';
-  } else if (filtr === 'bam') {
-    filtr = 'По району';
-  } else if (filtr === 'bum') {
-    filtr = 'По типу';
+  // Метод для выполнения запроса к API
+  fetchData() {
+    const url = this.buildUrl();
+
+    fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Ошибка при загрузке данных');
+      })
+      .then(data => {
+        this.renderCards(data); // Отображаем карточки
+        this.updatePagination(); // Обновляем пагинацию
+        this.showResult(); // Отображаем результат
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
   }
 
-  result.innerHTML = `
-    <p>Сортировка: ${sortBy || 'Без сортировки'}</p>
-    <p>Фильтр: ${filtr || 'Все'}</p>
-  `;
+  // Отображение карточек
+  renderCards(data) {
+    const depCards = document.getElementById('dep__cards');
+    depCards.innerHTML = ''; // очистка контейнера
+
+    if (data.length === 0) {
+      depCards.innerHTML = '<p>Нет данных для отображения.</p>';
+      return;
+    }
+
+    data.forEach(item => {
+      depCards.innerHTML += `
+        <div class="card ${item.filtr}" id="${item.id}">
+          <div class="img" style="width: 200px; height: 150px;"><img src='${item.img}' alt='${item.name}'></div>
+          <h3>${item.name}</h3>
+        </div>
+      `;
+    });
+
+    // клика по карточек
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', (event) => {
+        event.preventDefault();
+        const cardId = card.id;
+        this.nextIndex(cardId);
+      });
+    });
+  }
+
+  // Метод для обновления пагинации
+  updatePagination() {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = `
+      <button id="prevButton">&leftarrow;</button>
+      <p>${this.currentPage}</p>
+      <button id="nextButton">&rightarrow;</button>
+    `;
+
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    prevButton.addEventListener('click', () => {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchData();
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      this.currentPage++;
+      this.fetchData();
+    });
+  }
+
+  // Метод для отображения результата
+  showResult() {
+    const result = document.getElementById('result');
+    let sortByText = 'Без сортировки';
+    let filtrText = 'Все';
+
+    if (this.sortBy === 'rating') {
+      sortByText = this.order === 'desc' ? 'По рейтингу (высокий)' : 'По рейтингу (низкий)';
+    }
+
+    if (this.filtr === 'bam') {
+      filtrText = 'По району';
+    } else if (this.filtr === 'bum') {
+      filtrText = 'По типу';
+    }
+
+    result.innerHTML = `
+      <p>Сортировка: ${sortByText}</p>
+      <p>Фильтр: ${filtrText}</p>
+    `;
+  }
+
+  // Метод для перехода на следующую страницу
+  nextIndex(cardId) {
+    window.location.href = `index4.html?id=${cardId}`;
+  }
+
+  // Метод для обновления параметров и запроса данных
+  updateSearch(sortBy, filtr, page, order = '', search = '') {
+    this.sortBy = sortBy;
+    this.filtr = filtr;
+    this.currentPage = page;
+    this.order = order;
+    this.search = search;
+
+    // Обновляем URL без перезагрузки страницы
+    const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}&order=${order}&search=${search}#dep`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+
+    this.fetchData(); // Выполняем запрос с новыми параметрами
+  }
 }
 
-// Функция для перехода на следующую страницу
-function nextIndex(cardId) {
-  window.location.href = `index4.html?id=${cardId}`;
-}
-
-// Функция для получения параметра из URL
-function getUrlParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
-}
-
-// Функция для обновления URL с параметром сортировки
-function updateSearch(sortBy, filtr, page, order = '', search = '') {
-  // Создаем новый URL с обновленными параметрами
-  const newUrl = `index2.html?sortBy=${sortBy}&filtr=${filtr}&page=${page}&order=${order}&search=${search}#dep`;
-
-  // Обновляем URL без перезагрузки страницы
-  window.history.pushState({ path: newUrl }, '', newUrl);
-
-  // Вызываем функцию fetchData для обновления данных
-  fetchData(sortBy, filtr, page, order, search);
-}
+// Инициализация класса
+const fetcher = new DataFetcher('https://6729b8f86d5fa4901b6e13bc.mockapi.io/attractions');
 
 // Обработчик изменения сортировки
 document.getElementById('sort').addEventListener('change', () => {
@@ -157,9 +155,7 @@ document.getElementById('sort').addEventListener('change', () => {
   let sortBy = '';
   let order = 'desc'; // По умолчанию сортировка по убыванию
 
-  if (selectedText === 'Без сортировки') {
-    sortBy = '';
-  } else if (selectedText === 'По популярности (низкая)') {
+  if (selectedText === 'По популярности (низкая)') {
     sortBy = 'rating';
     order = 'asc'; // Сортировка по возрастанию
   } else if (selectedText === 'По популярности (высокая)') {
@@ -167,7 +163,7 @@ document.getElementById('sort').addEventListener('change', () => {
     order = 'desc'; // Сортировка по убыванию
   }
 
-  updateSearch(sortBy, getUrlParam('filtr') || '', getUrlParam('page') || 1, order, getUrlParam('search') || '');
+  fetcher.updateSearch(sortBy, fetcher.filtr, 1, order, fetcher.search);
 });
 
 // Обработчик изменения фильтра
@@ -176,22 +172,21 @@ document.getElementById('filtrs').addEventListener('change', () => {
   const selectedOption = filtrsSelect.options[filtrsSelect.selectedIndex];
   const selectedText = selectedOption.textContent;
 
-  let filtr = '';
-  if (selectedText === 'Все') {
-    filtr = 'all';
-  } else if (selectedText === 'По району') {
+  let filtr = 'all';
+  if (selectedText === 'По району') {
     filtr = 'bam';
   } else if (selectedText === 'По типу') {
     filtr = 'bum';
   }
-  updateSearch(getUrlParam('sortBy') || '', filtr, getUrlParam('page') || 1, getUrlParam('order') || '', getUrlParam('search') || '');
+
+  fetcher.updateSearch(fetcher.sortBy, filtr, 1, fetcher.order, fetcher.search);
 });
 
 // Обработчик события для поиска
-document.getElementById('search_input').addEventListener('input', function () {
-  const inputValue = this.value.trim().toLowerCase();
-  updateSearch(getUrlParam('sortBy'), getUrlParam('filtr'), 1, getUrlParam('order'), inputValue); // Сбрасываем страницу на 1 при поиске
-});
+document.getElementById('search_input').addEventListener('input', debounce(() => {
+  const inputValue = document.getElementById('search_input').value.trim().toLowerCase();
+  fetcher.updateSearch(fetcher.sortBy, fetcher.filtr, 1, fetcher.order, inputValue);
+}, 300));
 
 // Функция debounce
 function debounce(func, wait) {
@@ -202,5 +197,14 @@ function debounce(func, wait) {
   };
 }
 
-// Инициализация данных
-fetchData(getUrlParam('sortBy'), getUrlParam('filtr'), getUrlParam('page') || 1, getUrlParam('order'), getUrlParam('search'));
+// Инициализация данных при загрузке страницы
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const sortBy = urlParams.get('sortBy') || '';
+  const filtr = urlParams.get('filtr') || '';
+  const page = Number(urlParams.get('page')) || 1;
+  const order = urlParams.get('order') || '';
+  const search = urlParams.get('search') || '';
+
+  fetcher.updateSearch(sortBy, filtr, page, order, search);
+});

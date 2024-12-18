@@ -17,7 +17,7 @@ function showPreviousSlide() {
   updateSlider();
 }
 
-// Функция для показа следующего слайда
+//  следующего слайда
 function showNextSlide() {
   slideIndex = (slideIndex + 1) % slideCount;
   updateSlider();

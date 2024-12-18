@@ -893,7 +893,8 @@ body{
                     padding: 10px;
                     text-align: center;
                     // style btn
-                    border: 0;
+                    border: 2px solid #BF9424;
+                    border-radius: 20px;
                     color: red;
                 }
 
@@ -1395,9 +1396,11 @@ body{
         }
         &__modal{
             & #review-form{
+                width: 80%;
+                left: 9.5%;
                 &.open{
                     width: 80%;
-                    height: 50%;
+                    height: 70%;
                     & input{
                         width: 80%;
                         margin: 0 auto;

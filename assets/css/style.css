@@ -890,7 +890,8 @@ body {
   height: 55px;
   padding: 10px;
   text-align: center;
-  border: 0;
+  border: 2px solid #BF9424;
+  border-radius: 20px;
   color: red;
 }
 .reviews #reviews-list {
@@ -1389,9 +1390,13 @@ body {
     width: 100%;
     text-align: center;
   }
+  .reviews__modal #review-form {
+    width: 80%;
+    left: 9.5%;
+  }
   .reviews__modal #review-form.open {
     width: 80%;
-    height: 50%;
+    height: 70%;
   }
   .reviews__modal #review-form.open input {
     width: 80%;
